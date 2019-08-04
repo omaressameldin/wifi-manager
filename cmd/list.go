@@ -56,7 +56,6 @@ func renderNetworks(flags *pflag.FlagSet, networks []string) {
 	u, _ := flags.GetBool("in-use")
 
 	for i, n := range networks {
-		num := ""
 		if i == len(networks)-1 {
 			break
 		}
@@ -71,7 +70,7 @@ func renderNetworks(flags *pflag.FlagSet, networks []string) {
 				break
 			}
 		} else {
-			num = fmt.Sprintf("%d-", i)
+			num := fmt.Sprintf("%d-", i)
 			fmt.Println(num, n)
 		}
 	}
