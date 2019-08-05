@@ -10,7 +10,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func listSavedWifis() []string {
+func getSavedWifis() []string {
 	c := exec.Command("bash", "-c", "ls /etc/NetworkManager/system-connections/")
 	o, err := c.Output()
 	utils.Must(err)
@@ -29,11 +29,6 @@ func listSavedWifis() []string {
 		}
 		savedNetworksUniqArr = append(savedNetworksUniqArr, networkName)
 		savedNetworksSet[networkName] = true
-	}
-
-	for i, n := range savedNetworksUniqArr {
-		num := fmt.Sprintf("%d-", i+1)
-		fmt.Println(num, n)
 	}
 
 	return savedNetworksUniqArr
@@ -66,9 +61,9 @@ var deleteCmd = &cobra.Command{
 	Use:   "delete",
 	Short: "delete selected wifi network",
 	Run: func(cmd *cobra.Command, args []string) {
-		wifiLists := listSavedWifis()
-		selected := selectWifi(wifiLists)
-		deleteWifi(selected)
+		wifiLists := getSavedWifis()
+		selected := utils.SelectFromList("Select wifi network you want to delete", wifiLists, "💣")
+		deleteWifi(wifiLists[selected])
 	},
 }
 
