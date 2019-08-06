@@ -11,7 +11,7 @@ import (
 	"github.com/spf13/pflag"
 )
 
-func parseFlags(flags *pflag.FlagSet) string {
+func parseListFlags(flags *pflag.FlagSet) string {
 	var cmdColumns []string
 	n, _ := flags.GetBool("name")
 	if n {
@@ -83,7 +83,7 @@ var listCmd = &cobra.Command{
 
 	Run: func(cmd *cobra.Command, args []string) {
 		flags := cmd.Flags()
-		command := fmt.Sprintf("nmcli %v dev wifi list", parseFlags(flags))
+		command := fmt.Sprintf("nmcli %v dev wifi list", parseListFlags(flags))
 		c := exec.Command("bash", "-c", command)
 		o, err := c.Output()
 		utils.Must(err)
