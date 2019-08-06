@@ -4,8 +4,11 @@ import (
 	"fmt"
 	"math"
 	"os"
+	"os/exec"
+	"strings"
 
 	"github.com/manifoldco/promptui"
+	"github.com/omaressameldin/wifi-selector/network"
 )
 
 func Must(err error) {
@@ -15,10 +18,11 @@ func Must(err error) {
 	}
 }
 
-func SelectFromList(label string, list []string, icon string) int {
+func SelectFromList(label string, list []network.Network, icon string) int {
+	names := network.ListNames(list)
 	prompt := promptui.Select{
 		Label: label,
-		Items: list,
+		Items: names,
 		Size:  int(math.Max(float64(len(list)), 10)),
 		Templates: &promptui.SelectTemplates{
 			Active:   fmt.Sprintf("%v  {{ . | red | underline}}", icon),
@@ -29,4 +33,31 @@ func SelectFromList(label string, list []string, icon string) int {
 	index, _, err := prompt.Run()
 	Must(err)
 	return index
+}
+
+func GetSavedWifis() []network.Network {
+	c := exec.Command("bash", "-c", "ls /etc/NetworkManager/system-connections/")
+	o, err := c.Output()
+	Must(err)
+
+	savedNetworks := strings.Split(string(o), "\n")
+	savedNetworksSet := make(map[string]bool)
+	var savedNetworksUniqArr []network.Network
+
+	for i, n := range savedNetworks {
+		if i == len(savedNetworks)-1 {
+			break
+		}
+		networkName := strings.Replace(n, ".nmconnection", "", 1)
+		if savedNetworksSet[networkName] {
+			continue
+		}
+		savedNetworksUniqArr = append(savedNetworksUniqArr, network.Network{
+			Name:     networkName,
+			Filename: n,
+		})
+		savedNetworksSet[networkName] = true
+	}
+
+	return savedNetworksUniqArr
 }
