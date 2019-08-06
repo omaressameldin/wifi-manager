@@ -61,3 +61,12 @@ func GetSavedWifis() []network.SavedNetwork {
 
 	return savedNetworksUniqArr
 }
+
+func GetAvailableNetworks(extraOptions string) []string {
+	command := fmt.Sprintf("nmcli %v dev wifi list", extraOptions)
+	c := exec.Command("bash", "-c", command)
+	o, err := c.Output()
+	Must(err)
+
+	return strings.Split(string(o), "\n")
+}
