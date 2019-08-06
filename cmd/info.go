@@ -36,7 +36,7 @@ func parseInfoFlags(flags *pflag.FlagSet) string {
 	}
 }
 
-func showInfo(selectedNet network.Network, extraOptions string) {
+func showInfo(selectedNet network.SavedNetwork, extraOptions string) {
 	c := exec.Command(
 		"bash",
 		"-c",

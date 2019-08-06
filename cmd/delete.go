@@ -9,7 +9,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func deleteWifi(selectedNet network.Network) {
+func deleteWifi(selectedNet network.SavedNetwork) {
 	c := exec.Command(
 		"bash",
 		"-c",
