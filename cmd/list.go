@@ -2,7 +2,6 @@ package cmd
 
 import (
 	"fmt"
-	"os/exec"
 	"regexp"
 	"strings"
 
@@ -83,12 +82,8 @@ var listCmd = &cobra.Command{
 
 	Run: func(cmd *cobra.Command, args []string) {
 		flags := cmd.Flags()
-		command := fmt.Sprintf("nmcli %v dev wifi list", parseListFlags(flags))
-		c := exec.Command("bash", "-c", command)
-		o, err := c.Output()
-		utils.Must(err)
 
-		networks := strings.Split(string(o), "\n")
+		networks := utils.GetAvailableNetworks(parseListFlags(flags))
 		renderNetworks(flags, networks)
 	},
 }

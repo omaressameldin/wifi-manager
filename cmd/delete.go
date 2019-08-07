@@ -9,7 +9,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func deleteWifi(selectedNet network.Network) {
+func deleteWifi(selectedNet network.SavedNetwork) {
 	c := exec.Command(
 		"bash",
 		"-c",
@@ -25,7 +25,12 @@ var deleteCmd = &cobra.Command{
 	Short: "delete selected wifi network",
 	Run: func(cmd *cobra.Command, args []string) {
 		wifiLists := utils.GetSavedWifis()
-		selected := utils.SelectFromList("Select wifi network you want to delete", wifiLists, "💣")
+		selected := utils.SelectFromList(
+			"Select wifi network you want to delete",
+			network.ListNames(wifiLists),
+			"💣",
+			false,
+		)
 		deleteWifi(wifiLists[selected])
 	},
 }

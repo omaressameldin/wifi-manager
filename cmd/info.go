@@ -36,7 +36,7 @@ func parseInfoFlags(flags *pflag.FlagSet) string {
 	}
 }
 
-func showInfo(selectedNet network.Network, extraOptions string) {
+func showInfo(selectedNet network.SavedNetwork, extraOptions string) {
 	c := exec.Command(
 		"bash",
 		"-c",
@@ -59,8 +59,9 @@ var infoCmd = &cobra.Command{
 		wifiLists := utils.GetSavedWifis()
 		selected := utils.SelectFromList(
 			"Select wifi network you want to reveal",
-			wifiLists,
+			network.ListNames(wifiLists),
 			"👀",
+			true,
 		)
 		flags := cmd.Flags()
 

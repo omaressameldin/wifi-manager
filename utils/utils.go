@@ -18,14 +18,18 @@ func Must(err error) {
 	}
 }
 
-func SelectFromList(label string, list []network.Network, icon string) int {
-	names := network.ListNames(list)
+func SelectFromList(label string, list []string, icon string, isPositive bool) int {
+	color := "red"
+	if isPositive {
+		color = "magenta"
+	}
+
 	prompt := promptui.Select{
 		Label: label,
-		Items: names,
-		Size:  int(math.Max(float64(len(list)), 10)),
+		Items: list,
+		Size:  int(math.Min(float64(len(list)), 10)),
 		Templates: &promptui.SelectTemplates{
-			Active:   fmt.Sprintf("%v  {{ . | red | underline}}", icon),
+			Active:   fmt.Sprintf("%v  {{ . | %v | underline}}", icon, color),
 			Inactive: "   {{ . | white | faint }}",
 		},
 	}
@@ -35,14 +39,14 @@ func SelectFromList(label string, list []network.Network, icon string) int {
 	return index
 }
 
-func GetSavedWifis() []network.Network {
+func GetSavedWifis() []network.SavedNetwork {
 	c := exec.Command("bash", "-c", "ls /etc/NetworkManager/system-connections/")
 	o, err := c.Output()
 	Must(err)
 
 	savedNetworks := strings.Split(string(o), "\n")
 	savedNetworksSet := make(map[string]bool)
-	var savedNetworksUniqArr []network.Network
+	var savedNetworksUniqArr []network.SavedNetwork
 
 	for i, n := range savedNetworks {
 		if i == len(savedNetworks)-1 {
@@ -52,7 +56,7 @@ func GetSavedWifis() []network.Network {
 		if savedNetworksSet[networkName] {
 			continue
 		}
-		savedNetworksUniqArr = append(savedNetworksUniqArr, network.Network{
+		savedNetworksUniqArr = append(savedNetworksUniqArr, network.SavedNetwork{
 			Name:     networkName,
 			Filename: n,
 		})
@@ -60,4 +64,13 @@ func GetSavedWifis() []network.Network {
 	}
 
 	return savedNetworksUniqArr
+}
+
+func GetAvailableNetworks(extraOptions string) []string {
+	command := fmt.Sprintf("nmcli %v dev wifi list", extraOptions)
+	c := exec.Command("bash", "-c", command)
+	o, err := c.Output()
+	Must(err)
+
+	return strings.Split(string(o), "\n")
 }
