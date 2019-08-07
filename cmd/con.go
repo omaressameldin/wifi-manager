@@ -43,7 +43,7 @@ var conCmd = &cobra.Command{
 	ValidArgs: []string{},
 
 	Run: func(cmd *cobra.Command, args []string) {
-		networks := utils.GetAvailableNetworks("-f ssid")[1:]            // skip headers
+		networks := utils.GetAvailableNetworks("-f bssid")[1:]           // skip headers
 		networksToShow := utils.GetAvailableNetworks("-f ssid,bars")[1:] // skip headers
 		selected := utils.SelectFromList(
 			"Select netowrk to connect",
