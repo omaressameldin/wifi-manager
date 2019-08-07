@@ -18,14 +18,18 @@ func Must(err error) {
 	}
 }
 
-func SelectFromList(label string, list []network.SavedNetwork, icon string) int {
-	names := network.ListNames(list)
+func SelectFromList(label string, list []string, icon string, isPositive bool) int {
+	color := "red"
+	if isPositive {
+		color = "magenta"
+	}
+
 	prompt := promptui.Select{
 		Label: label,
-		Items: names,
-		Size:  int(math.Max(float64(len(list)), 10)),
+		Items: list,
+		Size:  int(math.Min(float64(len(list)), 10)),
 		Templates: &promptui.SelectTemplates{
-			Active:   fmt.Sprintf("%v  {{ . | red | underline}}", icon),
+			Active:   fmt.Sprintf("%v  {{ . | %v | underline}}", icon, color),
 			Inactive: "   {{ . | white | faint }}",
 		},
 	}

@@ -59,8 +59,9 @@ var infoCmd = &cobra.Command{
 		wifiLists := utils.GetSavedWifis()
 		selected := utils.SelectFromList(
 			"Select wifi network you want to reveal",
-			wifiLists,
+			network.ListNames(wifiLists),
 			"👀",
+			true,
 		)
 		flags := cmd.Flags()
 
