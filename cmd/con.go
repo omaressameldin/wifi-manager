@@ -7,6 +7,7 @@ import (
 	"os/exec"
 	"strings"
 
+	spinner "github.com/omaressameldin/wifi-selector/Spinner"
 	"github.com/omaressameldin/wifi-selector/utils"
 	"github.com/spf13/cobra"
 	"golang.org/x/crypto/ssh/terminal"
@@ -33,7 +34,13 @@ func connectToNetwork(networkName string) {
 	utils.Must(err)
 	io.WriteString(stdin, fmt.Sprintf("%v\n", string(password)))
 
+	s := spinner.Spinner{
+		Shape: 14,
+	}
+	s.StartSpinnerWithDelay("Connecting")
+
 	err = c.Wait()
+	s.StopSpinner()
 	utils.Must(err)
 }
 
