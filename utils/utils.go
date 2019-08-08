@@ -8,6 +8,7 @@ import (
 	"strings"
 
 	"github.com/manifoldco/promptui"
+	spinner "github.com/omaressameldin/wifi-selector/Spinner"
 	"github.com/omaressameldin/wifi-selector/network"
 )
 
@@ -67,9 +68,16 @@ func GetSavedWifis() []network.SavedNetwork {
 }
 
 func GetAvailableNetworks(extraOptions string) []string {
+	s := spinner.Spinner{
+		Shape: 14,
+	}
+	s.StartSpinner("Searching")
+
 	command := fmt.Sprintf("nmcli %v dev wifi list", extraOptions)
 	c := exec.Command("bash", "-c", command)
+
 	o, err := c.Output()
+	s.StopSpinner()
 	Must(err)
 
 	return strings.Split(string(o), "\n")
