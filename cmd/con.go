@@ -7,8 +7,8 @@ import (
 	"os/exec"
 	"strings"
 
-	spinner "github.com/omaressameldin/wifi-selector/Spinner"
-	"github.com/omaressameldin/wifi-selector/utils"
+	spinner "github.com/omaressameldin/wifi-manager/Spinner"
+	"github.com/omaressameldin/wifi-manager/utils"
 	"github.com/spf13/cobra"
 	"golang.org/x/crypto/ssh/terminal"
 )

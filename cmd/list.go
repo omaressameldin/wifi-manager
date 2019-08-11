@@ -5,7 +5,7 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/omaressameldin/wifi-selector/utils"
+	"github.com/omaressameldin/wifi-manager/utils"
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
 )

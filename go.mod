@@ -1,4 +1,4 @@
-module github.com/omaressameldin/wifi-selector
+module github.com/omaressameldin/wifi-manager
 
 go 1.12
 

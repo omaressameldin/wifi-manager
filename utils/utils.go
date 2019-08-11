@@ -8,8 +8,8 @@ import (
 	"strings"
 
 	"github.com/manifoldco/promptui"
-	spinner "github.com/omaressameldin/wifi-selector/Spinner"
-	"github.com/omaressameldin/wifi-selector/network"
+	spinner "github.com/omaressameldin/wifi-manager/Spinner"
+	"github.com/omaressameldin/wifi-manager/network"
 )
 
 func Must(err error) {
