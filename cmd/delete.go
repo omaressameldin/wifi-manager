@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"os/exec"
 
-	"github.com/omaressameldin/wifi-selector/network"
-	"github.com/omaressameldin/wifi-selector/utils"
+	"github.com/omaressameldin/wifi-manager/network"
+	"github.com/omaressameldin/wifi-manager/utils"
 	"github.com/spf13/cobra"
 )
 

@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"os/exec"
 
-	spinner "github.com/omaressameldin/wifi-selector/Spinner"
-	"github.com/omaressameldin/wifi-selector/utils"
+	spinner "github.com/omaressameldin/wifi-manager/Spinner"
+	"github.com/omaressameldin/wifi-manager/utils"
 	"github.com/spf13/cobra"
 )
 

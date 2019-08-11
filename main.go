@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/omaressameldin/wifi-selector/cmd"
-	"github.com/omaressameldin/wifi-selector/utils"
+	"github.com/omaressameldin/wifi-manager/cmd"
+	"github.com/omaressameldin/wifi-manager/utils"
 )
 
 func main() {
