@@ -82,3 +82,22 @@ func GetAvailableNetworks(extraOptions string) []string {
 
 	return strings.Split(string(o), "\n")
 }
+
+
+func GetAvailableDevices(extraOptions string) []string {
+	s := spinner.Spinner{
+		Shape: 14,
+	}
+	s.StartSpinner("Searching")
+
+	command := fmt.Sprintf("nmcli %v d s", extraOptions)
+	c := exec.Command("bash", "-c", command)
+
+	o, err := c.Output()
+	s.StopSpinner()
+	Must(err)
+
+	return strings.Split(string(o), "\n")
+}
+
+
